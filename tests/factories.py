@@ -11,7 +11,7 @@ from factory.alchemy import SQLAlchemyModelFactory
 from factory.fuzzy import FuzzyChoice, FuzzyText, FuzzyDateTime, FuzzyInteger
 
 from app.auth.models import User, UserCertification  # noqa
-from app.item.models import Item, ItemChild, ItemParent, ItemParentItemChild
+from app.item.models import Item, ItemChild, ItemParent, ItemParentItemChild, ItemChildChild
 from app.log.models import Log
 
 from .database import Session
@@ -106,6 +106,16 @@ class ItemChildFactory(BaseFactory):
     class Meta:
         """Factory Configuration."""
         model = ItemChild
+
+
+class ItemChildChildFactory(BaseFactory):
+    data = FuzzyText()
+
+    item_child = SubFactory(ItemChildFactory)
+
+    class Meta:
+        """Factory Configuration."""
+        model = ItemChildChild
 
 
 class ItemParentItemChildFactory(BaseFactory):

@@ -180,7 +180,7 @@ def delete(user_id: int, db: Session = Depends(get_db)):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="authauth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 @router.post('/certification/request',

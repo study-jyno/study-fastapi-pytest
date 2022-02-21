@@ -32,7 +32,7 @@ def db():
     delete_all()
 
 
-@pytest.fixture(scope="function", autouse=True)
+@pytest.fixture(scope="function", autouse=False)
 def session(db):
     """
     Creates a new database session with (with working transaction)
@@ -42,6 +42,24 @@ def session(db):
     session.begin_nested()
     yield session
     session.rollback()
+
+
+# Create Dummy Data
+@pytest.fixture(scope="session")
+def dummy_db():
+    create_all()
+    yield
+
+
+# Create Dummy Data
+@pytest.fixture(scope="function", autouse=False)
+def dummy_session(dummy_db):
+    """
+    Creates a new database session with (with working transaction)
+    for test duration.
+    """
+    session = Session
+    yield session
 
 
 @pytest.fixture(scope="function")
@@ -66,4 +84,9 @@ def item(session):
 
 @pytest.fixture
 def item_parent_item_child(session):
+    return ItemParentItemChildFactory()
+
+
+@pytest.fixture
+def item_parent_item_child_2(dummy_session):
     return ItemParentItemChildFactory()

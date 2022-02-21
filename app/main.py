@@ -8,8 +8,8 @@ from app.api import api_router
 from app.config import ROOT_PATH
 
 app = FastAPI(
-    title="AuditLog",
-    description="21.11.26 version",
+    title="Study FastAPI Pytest",
+    description="",
     version="0.0.1",
 )
 

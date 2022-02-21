@@ -39,44 +39,15 @@ class ItemChild(Base):
     data = Column(Text)
     item_parent_list = relationship("ItemParentItemChild", back_populates="item_child",
                                     cascade="all, delete", passive_deletes=True)
+    item_child_child_list = relationship("ItemChildChild", back_populates="item_child",
+                                         cascade="all, delete", passive_deletes=True)
 
 
-'''
-class UserFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = models.User
+class ItemChildChild(Base):
+    __tablename__ = 'item_child_child'
+    id = Column(Integer, primary_key=True)
+    data = Column(Text)
 
-    name = "John Doe"
-
-class GroupFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = models.Group
-
-    name = "Admins"
-
-class GroupLevelFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = models.GroupLevel
-
-    user = factory.SubFactory(UserFactory)
-    group = factory.SubFactory(GroupFactory)
-    rank = 1
-
-class UserWithGroupFactory(UserFactory):
-    membership = factory.RelatedFactory(
-        GroupLevelFactory,
-        factory_related_name='user',
-    )
-
-class UserWith2GroupsFactory(UserFactory):
-    membership1 = factory.RelatedFactory(
-        GroupLevelFactory,
-        factory_related_name='user',
-        group__name='Group1',
-    )
-    membership2 = factory.RelatedFactory(
-        GroupLevelFactory,
-        factory_related_name='user',
-        group__name='Group2',
-    )
-'''
+    item_child_id = Column(ForeignKey('item_child.id'), primary_key=True)
+    item_child = relationship("ItemChild", back_populates="item_child_child_list",
+                              cascade="all, delete", passive_deletes=True)
